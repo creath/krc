@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: FTCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# FTCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable FTCoin service.
+# FTCoin_config (path): Set to /usr/local/etc/FTCoin.conf by default.
+# FTCoin_user:  The user account FTCoin daemon runs as. It uses 'root' user by default.
+# FTCoin_group: The group account FTCoin daemon runs as. It uses 'wheel' group by default.
+# FTCoin_datadir (str): Default to "/var/db/FTCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=FTCoin
+rcvar=FTCoin_enable
+
+: ${FTCoin_enable:=NO}
+: ${FTCoin_config=/usr/local/etc/FTCoin.conf}
+: ${FTCoin_datadir=/var/db/FTCoin}
+: ${FTCoin_user="root"}
+: ${FTCoin_group="wheel"}
+
+required_files=${FTCoin_config}
+command=/usr/local/bin/FTCoind
+FTCoin_chdir=${FTCoin_datadir}
+pidfile="${FTCoin_datadir}/FTCoind.pid"
+stop_cmd=FTCoin_stop
+command_args="-conf=${FTCoin_config} -datadir=${FTCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+FTCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${FTCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${FTCoin_user}:${FTCoin_group} ${FTCoin_datadir}
+}
+
+FTCoin_prestart()
+{
+	if [ ! -d "${FTCoin_datadir}/." ]; then
+		FTCoin_create_datadir || return 1
+	fi
+}
+
+FTCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+FTCoin_stop()
+{
+    FTCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${FTCoin_config} -datadir=${FTCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

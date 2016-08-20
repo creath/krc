@@ -1,0 +1,11 @@
+[Unit]
+Description=FTCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=FTCoin
+ExecStart=/opt/FTCoin/FTCoind
+
+[Install]
+WantedBy=multi-user.target

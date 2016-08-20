@@ -1,0 +1,5 @@
+FTCoin-qt usr/bin
+share/pixmaps/FTCoin32.xpm usr/share/pixmaps
+share/pixmaps/FTCoin80.xpm usr/share/pixmaps
+debian/FTCoin-qt.desktop usr/share/applications
+debian/FTCoin-qt.protocol usr/share/kde4/services/

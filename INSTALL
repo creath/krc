@@ -1,0 +1,9 @@
+Building KRCoin
+
+See doc/readme-qt.rst for instructions on building KRCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of KRCoin.
+
+See doc/build-*.txt for instructions on building KRCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of KRCoin.

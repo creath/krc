@@ -1,0 +1,2 @@
+debian/bin/FTCoind usr/bin
+src/FTCoind usr/lib/FTCoin

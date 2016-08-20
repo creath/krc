@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=FTCoin
+Comment=FTCoin P2P Cryptocurrency
+Comment[ru]=FTCoin, P2P криптовалюта
+Comment[fr]=FTCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=FTCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/FTCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/FTCoin80.xpm
+MimeType=x-scheme-handler/FTCoin;
+Categories=Office;
